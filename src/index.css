@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap");
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* colors */
+
+  /* dark-theme */
+  --color-layout-dark: #1D1D1D;
+  --color-overall_bg-dark: #282828;
+  --color-select_layout-dark: #865DFF;
+  --color-layout_text-dark: #FBFBFB;
+  --color-header_icons-dark: #FBFBFB;
+  --color-hover-text-dark: #FBFBFB;
+
+  /* light-theme */
+  --color-layout-light: #FBFBFB;
+  --color-overall_bg-light: #E6DEFF;
+  --color-select_layout-light: #865DFF;
+  --color-layout_text-light: #686868;
+  --color-header_icons-light: #1d1d1d;
+  --color-hover-text-light: #FBFBFB;
+
+  /* font */
+  --font-layout-font: "Roboto Flex", sans-serif;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
