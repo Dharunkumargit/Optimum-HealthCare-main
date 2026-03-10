@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { HiOutlinePlus } from "react-icons/hi";
 import { API } from "../../../../Constant";
+import { MdDeleteOutline } from "react-icons/md";
 
 const Role = () => {
   const [departments, setDepartments] = useState([]);
@@ -28,7 +29,7 @@ const Role = () => {
     }
 
     const res = await axios.get(
-      `${API}/category/getcategoriesbydepartment?departmentId=${deptId}`
+      `${API}/category/getcategoriesbydepartment?departmentId=${deptId}`,
     );
 
     setCategories(res.data.data || []);
@@ -57,8 +58,6 @@ const Role = () => {
     setCategoryId(e.target.value);
   };
 
-
-
   /* ---------------- SAVE ROLE ---------------- */
   const handleSave = async () => {
     if (!departmentId || !categoryId || !roleName.trim()) return;
@@ -74,6 +73,20 @@ const Role = () => {
     setDepartmentId("");
     setShowModal(false);
     fetchRoles(); // refresh roles so dropdown updates
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this role?",
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`${API}/rolemaster/delete/${id}`);
+      fetchRoles();
+    } catch (error) {
+      console.error("Delete role error", error);
+    }
   };
 
   return (
@@ -97,6 +110,7 @@ const Role = () => {
               <tr className="border-b">
                 <th className="p-2 text-left">S.No</th>
                 <th className="p-2 text-left">Role Name</th>
+                <th className="p-2">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -104,6 +118,16 @@ const Role = () => {
                 <tr key={role._id} className="border-b">
                   <td className="p-2">{index + 1}</td>
                   <td className="p-2">{role.role_name}</td>
+
+                  {/* DELETE COLUMN */}
+                  <td className="p-2 text-center">
+                    <button
+                      onClick={() => handleDelete(role._id)}
+                      className="text-red-500 hover:text-red-700 transition"
+                    >
+                      <MdDeleteOutline size={20} />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

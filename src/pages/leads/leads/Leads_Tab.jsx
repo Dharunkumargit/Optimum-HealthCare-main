@@ -104,13 +104,13 @@ const Leads_Tab = ({ user }) => {
       if (!searchTerm) return true;
       const lowerSearchTerm = searchTerm.toLowerCase();
       return Object.values(lead).some((value) =>
-        value?.toString().toLowerCase().includes(lowerSearchTerm)
+        value?.toString().toLowerCase().includes(lowerSearchTerm),
       );
     });
 
   const paginatedData = filteredLeads.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   useEffect(() => {
@@ -151,6 +151,7 @@ const Leads_Tab = ({ user }) => {
     const tableColumn = [
       "Lead ID",
       "Name",
+      "Campaign Name",
       "Age",
       "Weight",
       "Circle",
@@ -161,6 +162,7 @@ const Leads_Tab = ({ user }) => {
     const tableRows = leads.map((lead) => [
       lead.lead_id,
       lead.name,
+      lead.campaign_name,
       lead.age,
       lead.weight,
       lead.circle,
@@ -183,6 +185,7 @@ const Leads_Tab = ({ user }) => {
     const worksheetData = leads.map((lead) => ({
       "Lead ID": lead.lead_id,
       Name: lead.name,
+      "Campaign Name": lead.campaign_name,
       Age: lead.age,
       Weight: lead.weight,
       Circle: lead.circle,
@@ -297,6 +300,7 @@ const Leads_Tab = ({ user }) => {
               </th>
               <th className="p-4">S.no</th>
               {[
+                "Campaign Name",
                 "Lead ID",
                 "Lead Type",
                 "Name",
@@ -331,6 +335,9 @@ const Leads_Tab = ({ user }) => {
                     />
                   </td>
                   <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                  <td>
+                    {data.campaign?.channelName || data.campaign_id || "N/A"}
+                  </td>
                   <td>{data.lead_id}</td>
                   <td className="first-letter:uppercase">{data.status}</td>
                   <td>{data.name}</td>
